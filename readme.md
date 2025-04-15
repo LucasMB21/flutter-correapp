@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # myapp
 
 A new Flutter project.
@@ -14,3 +15,6 @@ A few resources to get you started if this is your first Flutter project:
 For help getting started with Flutter development, view the
 [online documentation](https://docs.flutter.dev/), which offers tutorials,
 samples, guidance on mobile development, and a full API reference.
+=======
+# flutter-correapp
+>>>>>>> fa32966db05e392e0d2a2ce0810ab00e37ceaec2
