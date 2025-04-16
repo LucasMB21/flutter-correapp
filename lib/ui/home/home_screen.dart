@@ -16,26 +16,34 @@ class HomeScreen extends StatelessWidget {
       ),
       body: Padding(
         padding: EdgeInsets.symmetric(horizontal: 24.0),
-        child: Column(
-          spacing: 32.0,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Center(child: Image.asset('assets/logo.png', width: 147)),
-            Text("Boas-vindas!"),
-            TextFormField(),
-            Text("Escolha por categoria"),
-            Row(
-              children: List.generate(CategoriesData.listacategories.length, (
-                index,
-              ) {
-                return CategoryWidget(
-                  category: CategoriesData.listaCategories[index],
-                );
-              }),
-            ),
-            Image.asset("assets/banners/banner_promo.png"),
-            Text("Bem avaliados"),
-          ],
+        child: SingleChildScrollView(
+          child: Column(
+            spacing: 32.0,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Center(child: Image.asset('assets/logo.png', width: 147)),
+              Text("Boas-vindas!"),
+              TextFormField(),
+              Text("Escolha por categoria"),
+              SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                child: Row(
+                  spacing: 8.0,
+                  children: List.generate(
+                    CategoriesData.listaCategories.length,
+                    (index) {
+                      return CategoryWidget(
+                        category: CategoriesData.listaCategories[index],
+                      );
+                    },
+                  ),
+                ),
+              ),
+              Image.asset("assets/banners/banner_promo.png"),
+              Text("Bem avaliados"),
+              SizedBox(height: 64.0),
+            ],
+          ),
         ),
       ),
     );
