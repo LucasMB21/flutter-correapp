@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:myapp/model/dish.dart';
 import 'package:myapp/model/restaurant.dart';
-import 'package:myapp/ui/_core/bag_provider.dart';
 import 'package:myapp/ui/_core/widgets/appbar.dart';
+import 'package:myapp/ui/_core/bag_provider.dart';
 import 'package:provider/provider.dart';
 
 class RestaurantScreen extends StatelessWidget {
@@ -11,15 +11,17 @@ class RestaurantScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final bagProvider = Provider.of<BagProvider>(context);
+
     return Scaffold(
       appBar: getAppBar(context: context, title: restaurant.name),
       body: Center(
         child: Column(
-          spacing: 12.0,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Image.asset('assets/${restaurant.imagePath}', width: 128),
-            Text(
+            const SizedBox(height: 12.0),
+            const Text(
               "Mais pedidos",
               style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
             ),
@@ -27,19 +29,21 @@ class RestaurantScreen extends StatelessWidget {
               children: List.generate(restaurant.dishes.length, (index) {
                 Dish dish = restaurant.dishes[index];
                 return ListTile(
-                  onTap: () {},
+                  title: Text(dish.name),
+                  subtitle: Text("R\$${dish.price.toStringAsFixed(2)}"),
                   leading: Image.asset(
                     'assets/dishes/default.png',
                     width: 48,
                     height: 48,
                   ),
-                  title: Text(dish.name),
-                  subtitle: Text("R\$${dish.price.toStringAsFixed(2)}"),
                   trailing: IconButton(
+                    icon: const Icon(Icons.add),
                     onPressed: () {
-                      context.read<BagProvider>().addAllDishes([dish]);
+                      bagProvider.add(dish);
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(content: Text("Adicionado à sacola!")),
+                      );
                     },
-                    icon: Icon(Icons.add),
                   ),
                 );
               }),

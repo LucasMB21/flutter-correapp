@@ -12,21 +12,59 @@ class CheckoutScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text("Sacola"),
-        actions: [TextButton(onPressed: () {}, child: Text("Limpar"))],
+        actions: [
+          TextButton(
+            onPressed: () {
+              bagProvider.clearBag();
+            },
+            child: Text("Limpar"),
+          ),
+        ],
       ),
       body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16.0),
+        padding: const EdgeInsets.symmetric(horizontal: 8.0),
         child: SingleChildScrollView(
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              Text("Pedidos"),
+              Text("Pedidos", textAlign: TextAlign.center),
               Column(
                 children: List.generate(
                   bagProvider.getMapByAmount().keys.length,
                   (index) {
                     Dish dish =
                         bagProvider.getMapByAmount().keys.toList()[index];
-                    return ListTile();
+                    return ListTile(
+                      onTap: () {},
+                      leading: Image.asset(
+                        'assets/dishes/default.png',
+                        width: 48,
+                        height: 48,
+                      ),
+                      title: Text(dish.name),
+                      subtitle: Text("R\$${dish.price.toStringAsFixed(2)}"),
+                      trailing: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          IconButton(
+                            onPressed: () {
+                              bagProvider.removeDish(dish);
+                            },
+                            icon: Icon(Icons.remove),
+                          ),
+                          Text(
+                            bagProvider.getMapByAmount()[dish].toString(),
+                            style: TextStyle(fontSize: 18.0),
+                          ),
+                          IconButton(
+                            onPressed: () {
+                              bagProvider.addAllDishes([dish]);
+                            },
+                            icon: Icon(Icons.add),
+                          ),
+                        ],
+                      ),
+                    );
                   },
                 ),
               ),

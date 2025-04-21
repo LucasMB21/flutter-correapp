@@ -4,6 +4,11 @@ import 'package:myapp/model/dish.dart';
 class BagProvider extends ChangeNotifier {
   List<Dish> dishesOnBag = [];
 
+  void add(Dish dish) {
+    dishesOnBag.add(dish);
+    notifyListeners();
+  }
+
   addAllDishes(List<Dish> dishes) {
     dishesOnBag.addAll(dishes);
     notifyListeners();
